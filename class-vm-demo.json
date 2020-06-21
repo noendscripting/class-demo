@@ -1,0 +1,297 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "virtualMachineName": {
+      "type": "string"
+    },
+    "virtualMachineSize": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "adminUsername": {
+      "type": "string",
+      "defaultValue": "VADMIN"
+    },
+    "virtualNetworkName": {
+      "type": "string",
+      "defaultValue": "hub-vnet"
+    },
+    "adminPassword": {
+      "type": "securestring",
+      "defaultValue": "Test@2016"
+    },
+    "subnetName": {
+      "type": "string",
+      "defaultValue": "sharedSubnet"
+    },
+    "time": {
+      "type": "string",
+      "defaultValue": "23:00"
+    },
+    "virtualNetResourceGroupName": {
+      "type": "string",
+      "defaultValue": "Demo-RG"
+    },
+    "vrtutalMachineSKU": {
+      "type": "string",
+      "defaultValue": "2019-Datacenter"
+    },
+    "virtualMachineImagePublisher": {
+      "type": "string",
+      "defaultValue": "MicrosoftWindowsServer"
+    },
+    "virtualMachineImageOffer": {
+      "type": "string",
+      "defaultValue": "WindowsServer"
+    },
+    "encryptionKeyVaultName": {
+      "type": "string",
+      "minLength": 0
+    },
+    "encryptionKeyVaultResourceGroup": {
+      "type": "string",
+      "minLength": 0,
+      "metadata": {
+        "description": "Resource group of the KeyVault"
+      }
+    },
+    "volumeType": {
+      "type": "string",
+      "defaultValue": "All",
+      "allowedValues": [
+        "All",
+        "Data",
+        "OS"
+      ],
+      "metadata": {
+        "description": "Type of the volume OS or Data to perform encryption operation"
+      }
+    },
+    "forceUpdateTag": {
+      "type": "string",
+      "defaultValue": "1.0",
+      "metadata": {
+        "description": "Pass in an unique value like a GUID everytime the operation needs to be force run"
+      }
+    },
+    "resizeOSDisk": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Should the OS partition be resized to occupy full OS VHD before splitting system volume"
+      }
+    },
+   "backupVaultName" : {
+        "type":"string",
+        "defaultValue":"demo-bkup-vault"
+        "minLength": 0
+      },
+      "backupPolicyDsiplayname" : {
+        "type": "string",
+        "defaultValue": "DefaultPolicy"
+      },
+      "vaultResourceGroup":{
+        "type": "string",
+        "defaultValue": "Demo-RG"
+      }
+
+  },
+  "variables": {
+    "VnetID": "[resourceId(parameters('virtualNetResourceGroupName'),'Microsoft.Network/virtualNetworks', parameters('virtualNetworkname'))]",
+    "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
+    "networkInterfaceName": "[concat(parameters('virtualMachineName'),'NIC')]",
+    "publicIpAddressName": "[concat(parameters('virtualMachineName'),'PUBLICIP')]",
+    "policyName": "[concat('shutdown-computevm-',parameters('virtualMachineName'))]",
+    "vmNicResoucreID": "[resourceId('Microsoft.Network/networkInterfaces',variables('networkInterfaceName'))]",
+    "DeploymentNames": {
+      "backup": "[concat(parameters('virtualMachineName'),'-BackupConfig')]",
+      "encryption": "[concat('encryption',parameters('virtualMachineName'))]"
+    },
+    "vmResourceId": "[resourceId('Microsoft.Compute/virtualMachines', parameters('virtualMachineName'))]"
+
+
+  },
+  "resources": [
+    //VM NIC
+    {
+      "name": "[variables('networkInterfaceName')]",
+      "type": "Microsoft.Network/networkInterfaces",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+      ],
+      "tags": {
+        "displayName": "VMNIC"
+      },
+      "properties": {
+        "primary": true,
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "subnet": {
+                "id": "[variables('subnetRef')]"
+              },
+              "privateIPAllocationMethod": "Dynamic"
+            }
+            
+          }
+        ],
+        "dnsSettings": {
+
+        }
+
+      }
+    },
+    // VM Build
+    {
+      "name": "[parameters('virtualMachineName')]",
+      "type": "Microsoft.Compute/virtualMachines",
+      "apiVersion": "2017-03-30",
+      "location": "[resourceGroup().location]",
+
+      "dependsOn": [
+        "[variables('vmNicResoucreID')]"
+      ],
+      "tags": {
+        "displayName": "BaseVM"
+      },
+      "properties": {
+        "osProfile": {
+          "computerName": "[parameters('virtualMachineName')]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]"
+        },
+        "hardwareProfile": {
+          "vmSize": "[parameters('virtualMachineSize')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "[parameters('virtualMachineImagePublisher')]",
+            "offer": "[parameters('virtualMachineImageOffer')]",
+            "sku": "[parameters('vrtutalMachineSKU')]",
+            "version": "latest"
+          },
+          "osDisk": {
+            "createOption": "FromImage",
+            "managedDisk": {
+              "storageAccountType": "Standard_LRS"
+            }
+          },
+          "dataDisks": [
+          ]
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[variables('vmNicResoucreID')]"
+            }
+          ]
+
+        }
+
+      }
+    },
+    //Shutdown Schedule
+    {
+      "apiVersion": "2018-09-15",
+      "type": "Microsoft.DevTestLab/schedules",
+      "name": "[variables('policyName')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('virtualMachineName'))]"
+      ],
+      "tags": {
+        "displayName": "BaseVMShutdown-11:00pm"
+      },
+      "properties": {
+        "status": "Enabled",
+        "timeZoneId": "Eastern Standard Time",
+        "taskType": "ComputeVmShutdownTask",
+        "notificationSettings": {
+          "status": "Disabled",
+          "timeInMinutes": 15,
+          "webhookUrl": null
+        },
+        "targetResourceId": "[resourceId('Microsoft.Compute/virtualMachines',parameters('virtualMachineName'))]",
+        "dailyRecurrence": {
+          "time": "[parameters('time')]"
+        }
+      }
+    },
+    //Encryotion Deployment
+    {
+      "condition": "[greater(length(parameters('encryptionKeyVaultName')),0)]",
+      "name": "[variables('DeploymentNames').encryption]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2019-08-01",
+      "tags": {
+        "DisplayName": "EncryptionEXT"
+      },
+      "dependsOn": [
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('virtualMachineName'))]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/noendscripting/azuredeploy/master/encrypt-extension.json"
+        },
+        "parameters": {
+          "vmName": {
+            "value": "[parameters('virtualMachineName')]"
+          },
+          "keyVaultName": {
+            "value": "[parameters('encryptionKeyVaultName')]"
+          },
+          "keyVaultResourceGroup": {
+            "value": "[parameters('encryptionKeyVaultResourceGroup')]"
+          },
+          "volumeType": {
+            "value": "[parameters('volumeType')]"
+          },
+          "forceUpdateTag": {
+            "value": "[parameters('forceUpdateTag')]"
+          },
+          "resizeOSDisk": {
+            "value": "[parameters('resizeOSDisk')]"
+          }
+        }
+      }
+    },
+    {   
+        "condition": "[greater(length(parameters('backupVaultName')),0)]",
+        "name": "[variables('DeploymentNames').backup]",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2017-05-10",
+        "dependsOn": [
+          "[concat('Microsoft.Resources/deployments/',variables('DeploymentNames').encryption)]"
+        ],
+        "resourceGroup": "[parameters('vaultResourceGroup')]",
+        "properties":{
+          "mode":"Incremental",
+         "templateLink":{
+           "uri": "https://raw.githubusercontent.com/noendscripting/azuredeploy/master/backup-template.json"
+         },
+         "parameters":{
+            "vaultName" : {
+              "value":"[parameters('backupVaultName')]"
+            },
+            "vmResourceID": {
+              "value": "[variables('vmResourceId')]"
+            },
+            "backupPolicyName" : {
+              "value": "[parameters('backupPolicyDsiplayname')]"
+            },
+            "virtualMachineName" :{
+              "value":"[parameters('virtualMachineName')]"
+            }
+         }
+        }
+        
+      }
+  ],
+  "outputs": {
+
+  }
+}

@@ -1,0 +1,72 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "southcentralus"
+        },
+        "virtualMachineName": {
+            "value": "ProtectedVM"
+        },
+        "virtualMachineSize": {
+            "value": "Standard_B2s"
+        },
+        "adminUsername": {
+            "value": "VADMIN"
+        },
+        "virtualNetworkName": {
+            "value": "hub-vnet"
+        },
+        "adminPassword": {
+            "value": "Test@2016"
+        },
+        "subnetName": {
+            "value": "sharedSubnet"
+        },
+        "publicIpAddressType": {
+            "value": "Dynamic"
+        },
+        "time": {
+            "value": "23:00"
+        },
+        "virtualNetResourceGroupName": {
+            "value": "Demo-RG"
+        },
+        "vrtutalMachineSKU": {
+            "value": "2019-Datacenter"
+        },
+        "virtualMachineImagePublisher": {
+            "value": "MicrosoftWindowsServer"
+        },
+        "virtualMachineImageOffer": {
+            "value": "WindowsServer"
+        },
+        "encryptionKeyVaultName": {
+            "value": "demo-sc-keyvault"
+        },
+        "encryptionKeyVaultResourceGroup": {
+            "value": "Demo-Rg",
+            "metadata": {
+                "description": "Resource group of the KeyVault"
+            }
+        },
+        "volumeType": {
+            "value": "All",
+            "metadata": {
+                "description": "Type of the volume OS or Data to perform encryption operation"
+            }
+        },
+        "forceUpdateTag": {
+            "value": "1.0",
+            "metadata": {
+                "description": "Pass in an unique value like a GUID everytime the operation needs to be force run"
+            }
+        },
+        "resizeOSDisk": {
+            "value": false,
+            "metadata": {
+                "description": "Should the OS partition be resized to occupy full OS VHD before splitting system volume"
+            }
+        }
+    }
+}

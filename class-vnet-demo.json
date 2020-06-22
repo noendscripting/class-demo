@@ -5,111 +5,111 @@
         "hubVNETName": {
             "type": "String",
             "metadata": {
-                "description":"Name of the HUB VNNET"
+                "description": "Name of the HUB VNNET"
             }
         },
         "hubVNETIpPrefix": {
             "type": "string",
             "metadata": {
-                "descriotion":"CIDR for Ip Range for the Hub VNET must not overlap with any other VNET e.g. 10.0.0.0/16"
+                "descriotion": "CIDR for Ip Range for the Hub VNET must not overlap with any other VNET e.g. 10.0.0.0/16"
             }
         },
         "hubVNETSubnet1Name": {
             "type": "string",
             "metadata": {
-                "description":"Name of the first subnet in the VNET "
+                "description": "Name of the first subnet in the VNET "
             }
         },
         "hubVNETSubnet1IpPrefix": {
             "type": "string",
             "metadata": {
-                "description":"CIDR for the first subnet in the HUB vnet, must be inside the IP range of the Hub VNET"
+                "description": "CIDR for the first subnet in the HUB vnet, must be inside the IP range of the Hub VNET"
             }
         },
         "spokeVNETName": {
             "type": "String",
-            "metadata":{
-                "description":"Name of the sppoke VNET"
+            "metadata": {
+                "description": "Name of the sppoke VNET"
             }
         },
         "spokeVNETIpPrefix": {
             "type": "string",
             "metadata": {
-                "descrition":"CIDR IP range for the Spoke VNET must not overlapp with Ip range for Hub VNET "
+                "descrition": "CIDR IP range for the Spoke VNET must not overlapp with Ip range for Hub VNET "
             }
         },
         "spokeVNETSubnet1Name": {
             "type": "string",
             "metadata": {
-                "description":"Name of the SPOKE VNET subnet #1"
+                "description": "Name of the SPOKE VNET subnet #1"
             }
         },
         "spokeVNETSubnet1IpPrefix": {
             "defaultValue": "10.1.0.0/24",
             "type": "string",
             "metadata": {
-                "description":"CIDR for the first subnet in the SPOKE VNET, must be inside the IP range of the Hub VNET"
+                "description": "CIDR for the first subnet in the SPOKE VNET, must be inside the IP range of the Hub VNET"
             }
         },
         "AzureFirewallname": {
             "type": "string",
             "metadata": {
-                "description":"Name of the Azure Firewall deployed to HUB VNET"
+                "description": "Name of the Azure Firewall deployed to HUB VNET"
             }
         },
         "AzureFirewallPIPname": {
             "type": "string",
             "defaultValue": "MainFirewallPIP",
             "metadata": {
-                "description":"Name of the public IP Address for Main Firewall"
+                "description": "Name of the public IP Address for Main Firewall"
             }
         },
         "AzureFirewallSubnetIpPrefix": {
             "type": "string",
             "metadata": {
-                "description":"CIDR for the Main Firewall subnet must be at least /24"
+                "description": "CIDR for the Main Firewall subnet must be at least /24"
             }
         },
         "vmssName": {
             "type": "string",
             "metadata": {
-                "description":"Base Name for the scale set VM instance will be randomized later in template "
+                "description": "Base Name for the scale set VM instance will be randomized later in template "
             }
         },
         "adminUsername": {
             "type": "string",
             "metadata": {
-                "description":"Name of the admin account for scale set VM instances"
+                "description": "Name of the admin account for scale set VM instances"
             }
         },
         "adminPassword": {
             "type": "securestring",
             "metadata": {
-                "description":"Password for the admin account for scaleset VM instances"
+                "description": "Password for the admin account for scaleset VM instances"
             }
         },
         "vmssVirtualmachineSize": {
             "type": "string",
             "metadata": {
-                "description":"Size of the VM instance in scale set"
+                "description": "Size of the VM instance in scale set"
             }
         },
         "vmssvrtutalMachineSKU": {
             "type": "string",
             "metadata": {
-                "description":"OS type and version of the scale set VM instance"
+                "description": "OS type and version of the scale set VM instance"
             }
         },
         "vmssvirtualMachineImagePublisher": {
             "type": "string",
             "metadata": {
-                "description":"Name of the image publsihes of the VM scale set instance"
+                "description": "Name of the image publsihes of the VM scale set instance"
             }
         },
         "vmssvirtualMachineImageOffer": {
             "type": "string",
             "metadata": {
-                "description":"Name of the inage offer for the VM scale set instance"
+                "description": "Name of the inage offer for the VM scale set instance"
             }
 
         },
@@ -119,42 +119,42 @@
                 "description": "Number of VM instances (100 or less)."
             },
             "maxValue": 100
-        },       
+        },
         "hubVnetBastionName": {
             "type": "string",
             "metadata": {
-                "description":"Name of the Azure Bastion deployed into HUB VNET"
+                "description": "Name of the Azure Bastion deployed into HUB VNET"
             }
         },
         "hubBastionPublicIPName": {
             "type": "string",
             "metadata": {
-                "description":"Name of the public IP for the Azure Bastion in HUB VNET subnet #1"
+                "description": "Name of the public IP for the Azure Bastion in HUB VNET subnet #1"
             }
         },
         "hubBastionIpPrefix": {
             "type": "string",
             "metadata": {
-                "description":"CIDR for the Azure Bastion subnet in the HUB VNET"
+                "description": "CIDR for the Azure Bastion subnet in the HUB VNET"
             }
         },
         "keyVaultName": {
             "type": "string",
             "metadata": {
-                "description":"Name of the KeyVault for encryotion and admin VM password secret"
+                "description": "Name of the KeyVault for encryotion and admin VM password secret"
             }
-            
+
         },
         "keyVaultSecretName": {
             "type": "string",
             "metadata": {
-                "description":"Name of the Key Vault secret where server password is stored"
+                "description": "Name of the Key Vault secret where server password is stored"
             }
         },
         "keyVaultSecretValue": {
             "type": "string",
             "metadata": {
-                "description":"Name of the KeyVault for encryotion and admin VM password secret. Must be globally unique"
+                "description": "Name of the KeyVault for encryotion and admin VM password secret. Must be globally unique"
             }
         }
     },
@@ -188,9 +188,123 @@
         "imageReference": "[variables('osType')]",
         "ipConfigName": "[concat(variables('namingInfix'), 'ipconfig')]",
         "hubBstionPiblicIpId": "[resourceId('Microsoft.Network/publicIPAddresses',parameters('HubBastionPublicIPName'))]",
-        "keyVaultSecretName":"[concat(parameters('keyVaultName'), '/',parameters('keyVaultSecretName'))]"
+        "keyVaultSecretName": "[concat(parameters('keyVaultName'), '/',parameters('keyVaultSecretName'))]"
     },
     "resources": [
+        //Key Vault
+        {
+            "type": "Microsoft.KeyVault/vaults",
+            "apiVersion": "2019-09-01",
+            "name": "[parameters('keyVaultName')]",
+            "location": "southcentralus",
+            "tags": {
+                "DisplayName": "KeyVault"
+            },
+            "properties": {
+                "sku": {
+                    "family": "A",
+                    "name": "standard",
+                    "enabledForDiskEncryption": "true",
+                    "enabledForTemplateDeployment": "true",
+                    "enableSoftDelete": "false"
+                },
+                "tenantId": "d65b7371-c385-4060-8b4c-b6510616cb67",
+                "accessPolicies": [
+                    {
+                        "tenantId": "d65b7371-c385-4060-8b4c-b6510616cb67",
+                        "objectId": "1a959f60-6307-4101-9de7-da51b9bb9dc2",
+                        "permissions": {
+                            "keys": [
+                                "Get",
+                                "Create",
+                                "Delete",
+                                "List",
+                                "Update",
+                                "Import",
+                                "Backup",
+                                "Restore",
+                                "Recover"
+                            ],
+                            "secrets": [
+                                "Get",
+                                "List",
+                                "Set",
+                                "Delete",
+                                "Backup",
+                                "Restore",
+                                "Recover"
+                            ],
+                            "certificates": [
+                                "Get",
+                                "List",
+                                "Delete",
+                                "Create",
+                                "Import",
+                                "Update",
+                                "ManageContacts",
+                                "GetIssuers",
+                                "ListIssuers",
+                                "SetIssuers",
+                                "DeleteIssuers",
+                                "ManageIssuers",
+                                "Recover"
+                            ],
+                            "storage": [
+                                "get",
+                                "list",
+                                "delete",
+                                "set",
+                                "update",
+                                "regeneratekey",
+                                "setsas",
+                                "listsas",
+                                "getsas",
+                                "deletesas"
+                            ]
+                        }
+                    },
+                    {
+                        "tenantId": "d65b7371-c385-4060-8b4c-b6510616cb67",
+                        "objectId": "af8831ee-a314-4bd7-84f0-888f1c9192d0",
+                        "permissions": {
+                            "secrets": [
+                                "Backup",
+                                "List",
+                                "Get"
+                            ],
+                            "keys": [
+                            ],
+                            "certificates": [
+                            ]
+                        }
+                    }
+                ],
+                "enabledForDeployment": false,
+                "enabledForDiskEncryption": true,
+                "enabledForTemplateDeployment": true,
+                "enableSoftDelete": true
+            }
+        },
+        //Key Valut Secret
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2016-10-01",
+            "name": "[variables('keyVaultSecretName')]",
+            "location": "southcentralus",
+            "dependsOn": [
+                "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]"
+            ],
+            "tags": {
+                "file-encoding": "utf-8"
+            },
+            "properties": {
+                "attributes": {
+                    "enabled": true
+                },
+                "value": "[parameters('keyVaultSecretValue')]",
+                "contentType": "string"
+            }
+        },
         //Hub VNET
         {
             "type": "Microsoft.Network/virtualNetworks",
@@ -393,9 +507,12 @@
                                         "SqlManagement",
                                         "Storage"
                                     ],
-                                    "sourceIpGroups": [],
-                                    "destinationIpGroups": [],
-                                    "destinationFqdns": [],
+                                    "sourceIpGroups": [
+                                    ],
+                                    "destinationIpGroups": [
+                                    ],
+                                    "destinationFqdns": [
+                                    ],
                                     "destinationPorts": [
                                         "443"
                                     ]
@@ -448,6 +565,9 @@
             "name": "[variables('loadBalancerName')]",
             "location": "[resourceGroup().location]",
             "apiVersion": "2016-03-30",
+            "tags": {
+                "DisplayName":"vmssLoadBalancer"
+            }
             "dependsOn": [
                 "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]"
             ],
@@ -522,7 +642,7 @@
             "type": "Microsoft.Compute/virtualMachineScaleSets",
             "name": "[variables('namingInfix')]",
             "location": "[resourceGroup().location]",
-            "apiVersion": "2016-04-30-preview",
+            "apiVersion": "2018-10-01",
             "tags": {
                 "DisplayName": "VM Scaleset"
             },
@@ -551,8 +671,8 @@
                     "osProfile": {
                         "computerNamePrefix": "[variables('namingInfix')]",
                         "adminUsername": "[parameters('adminUsername')]",
-                      "adminPassword": "[parameters('adminPassword')]"
-                       
+                        "adminPassword": "[parameters('adminPassword')]"
+
                     },
                     "networkProfile": {
                         "networkInterfaceConfigurations": [
@@ -604,9 +724,9 @@
                     {
                         "name": "Profile1",
                         "capacity": {
-                            "minimum": "1",
+                            "minimum": "2",
                             "maximum": "10",
-                            "default": "1"
+                            "default": "2"
                         },
                         "rules": [
                             {
@@ -657,8 +777,8 @@
             "apiVersion": "2019-12-01",
             "location": "[resourceGroup().location]",
             "name": "[parameters('HubBastionPublicIPName')]",
-            "sku":{
-                "name":"Standard"
+            "sku": {
+                "name": "Standard"
             },
             "Properties": {
                 "publicIpAllocationMethod": "Static"
@@ -694,118 +814,39 @@
                     }
                 ]
             }
-        },
-        //Key Vault
-         {
-            "type": "Microsoft.KeyVault/vaults",
-            "apiVersion": "2016-10-01",
-            "name": "[parameters('keyVaultName')]",
-            "location": "southcentralus",
-            "tags": {
-                "DisplayName": "KeyVault"
-            },
-            "properties": {
-                "sku": {
-                    "family": "A",
-                    "name": "standard"
-                },
-                "tenantId": "d65b7371-c385-4060-8b4c-b6510616cb67",
-                "accessPolicies": [
-                    {
-                        "tenantId": "d65b7371-c385-4060-8b4c-b6510616cb67",
-                        "objectId": "1a959f60-6307-4101-9de7-da51b9bb9dc2",
-                        "permissions": {
-                            "keys": [
-                                "Get",
-                                "Create",
-                                "Delete",
-                                "List",
-                                "Update",
-                                "Import",
-                                "Backup",
-                                "Restore",
-                                "Recover"
-                            ],
-                            "secrets": [
-                                "Get",
-                                "List",
-                                "Set",
-                                "Delete",
-                                "Backup",
-                                "Restore",
-                                "Recover"
-                            ],
-                            "certificates": [
-                                "Get",
-                                "List",
-                                "Delete",
-                                "Create",
-                                "Import",
-                                "Update",
-                                "ManageContacts",
-                                "GetIssuers",
-                                "ListIssuers",
-                                "SetIssuers",
-                                "DeleteIssuers",
-                                "ManageIssuers",
-                                "Recover"
-                            ],
-                            "storage": [
-                                "get",
-                                "list",
-                                "delete",
-                                "set",
-                                "update",
-                                "regeneratekey",
-                                "setsas",
-                                "listsas",
-                                "getsas",
-                                "deletesas"
-                            ]
-                        }
-                    },
-                    {
-                        "tenantId": "d65b7371-c385-4060-8b4c-b6510616cb67",
-                        "objectId": "af8831ee-a314-4bd7-84f0-888f1c9192d0",
-                        "permissions": {
-                            "secrets": [
-                                "Backup",
-                                "List",
-                                "Get"
-                            ],
-                            "keys": [],
-                            "certificates": []
-                        }
-                    }
-                ],
-                "enabledForDeployment": false,
-                "enabledForDiskEncryption": true,
-                "enabledForTemplateDeployment": true,
-                "enableSoftDelete": true
-            }
-        },
-        //Key Valut Secret
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "apiVersion": "2016-10-01",
-            "name":"[variables('keyVaultSecretName')]" ,
-            "location": "southcentralus",
-            "dependsOn": [
-                "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]"
-            ],
-            "tags": {
-                "file-encoding": "utf-8"
-            },
-            "properties": {
-                "attributes": {
-                    "enabled": true
-                },
-                "value": "[parameters('keyVaultSecretValue')]",
-                "contentType": "string"
-            }
         }
 
 
 
+
+    ],
+    "outputs": {
+        "rgName": {
+            "type": "string",
+            "value": "[resourceGroup().name]"
+        },
+        "hubVnetName": {
+            "type": "string",
+            "value": "[parameters('hubVNETName')]"
+        },
+        "subnetname": {
+            "type": "string",
+            "value": "[parameters('hubVNETSubnet1Name')]"
+        },
+        "location": {
+            "type": "string",
+            "value": "[resourceGroup().location]"
+        },
+        "keyVayulName": {
+            "type": "string",
+            "value": "[parameters('keyVaultName')]"
+        },
+        "vmmLBPIPAddress": {
+            "type": "string",
+            "value": "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName')).IpAddress]"
+        }
+
+    },
+    "functions": [
     ]
 }

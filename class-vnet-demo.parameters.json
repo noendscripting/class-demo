@@ -112,7 +112,7 @@
 
         },
         "vmssInstanceCount": {
-            "value": 2,
+            "value": 5,
             "metadata": {
                 "description": "Number of VM instances (100 or less)."
             }
@@ -154,5 +154,5 @@
                 "description":"Name of the Key Vault secret where server password is stored"
             }
         }
-    },
+    }
 }

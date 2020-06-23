@@ -45,7 +45,6 @@
             }
         },
         "spokeVNETSubnet1IpPrefix": {
-            "defaultValue": "10.1.0.0/24",
             "type": "string",
             "metadata": {
                 "description": "CIDR for the first subnet in the SPOKE VNET, must be inside the IP range of the Hub VNET"
@@ -567,7 +566,7 @@
             "apiVersion": "2016-03-30",
             "tags": {
                 "DisplayName":"vmssLoadBalancer"
-            }
+            },
             "dependsOn": [
                 "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]"
             ],
@@ -793,7 +792,11 @@
             "type": "Microsoft.Network/bastionHosts",
             "apiVersion": "2020-04-01",
             "name": "[parameters('hubVnetBastionName')]",
-            "location": "southcentralus",
+            "location": "[resourceGroup().location]",
+            "dependsON":[
+                "[variables('hubVnetid')]",
+                "[resourceId('Microsoft.Network/publicIPAddresses',parameters('HubBastionPublicIPName'))]"
+                ],
             "tags": {
                 "DisplayName": "HubBastion"
             },
@@ -843,7 +846,7 @@
         },
         "vmmLBPIPAddress": {
             "type": "string",
-            "value": "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName')).IpAddress]"
+            "value": "[ variables('publicIPAddressName')]"
         }
 
     },

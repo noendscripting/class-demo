@@ -2,9 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "location": {
-            "value": "southcentralus"
-        },
         "virtualMachineName": {
             "value": "ProtectedVM"
         },
@@ -23,9 +20,6 @@
         "subnetName": {
             "value": "sharedSubnet"
         },
-        "publicIpAddressType": {
-            "value": "Dynamic"
-        },
         "time": {
             "value": "23:00"
         },
@@ -42,31 +36,19 @@
             "value": "WindowsServer"
         },
         "encryptionKeyVaultName": {
-            "value": "demo-sc-keyvault"
+            "value": "demo-sc-vault"
         },
         "encryptionKeyVaultResourceGroup": {
-            "value": "Demo-Rg",
-            "metadata": {
-                "description": "Resource group of the KeyVault"
-            }
-        },
+            "value": "Demo-RG"
+          },
         "volumeType": {
-            "value": "All",
-            "metadata": {
-                "description": "Type of the volume OS or Data to perform encryption operation"
-            }
+            "value": "All"
         },
         "forceUpdateTag": {
-            "value": "1.0",
-            "metadata": {
-                "description": "Pass in an unique value like a GUID everytime the operation needs to be force run"
-            }
+            "value": "1.0"
         },
         "resizeOSDisk": {
-            "value": false,
-            "metadata": {
-                "description": "Should the OS partition be resized to occupy full OS VHD before splitting system volume"
-            }
+            "value": false
         }
     }
 }

@@ -82,26 +82,25 @@
         "description": "Should the OS partition be resized to occupy full OS VHD before splitting system volume"
       }
     },
-   "backupVaultName" : {
-        "type":"string",
-        "defaultValue":"demo-bkup-vault"
-        "minLength": 0
-      },
-      "backupPolicyDsiplayname" : {
-        "type": "string",
-        "defaultValue": "DefaultPolicy"
-      },
-      "vaultResourceGroup":{
-        "type": "string",
-        "defaultValue": "Demo-RG"
-      }
+    "backupVaultName": {
+      "type": "string",
+      "defaultValue": "demo-bkup-vault",
+      "minLength": 0
+    },
+    "backupPolicyDsiplayname": {
+      "type": "string",
+      "defaultValue": "DefaultPolicy"
+    },
+    "vaultResourceGroup": {
+      "type": "string",
+      "defaultValue": "Demo-RG"
+    }
 
   },
   "variables": {
     "VnetID": "[resourceId(parameters('virtualNetResourceGroupName'),'Microsoft.Network/virtualNetworks', parameters('virtualNetworkname'))]",
     "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
     "networkInterfaceName": "[concat(parameters('virtualMachineName'),'NIC')]",
-    "publicIpAddressName": "[concat(parameters('virtualMachineName'),'PUBLICIP')]",
     "policyName": "[concat('shutdown-computevm-',parameters('virtualMachineName'))]",
     "vmNicResoucreID": "[resourceId('Microsoft.Network/networkInterfaces',variables('networkInterfaceName'))]",
     "DeploymentNames": {
@@ -135,7 +134,7 @@
               },
               "privateIPAllocationMethod": "Dynamic"
             }
-            
+
           }
         ],
         "dnsSettings": {
@@ -259,37 +258,37 @@
         }
       }
     },
-    {   
-        "condition": "[greater(length(parameters('backupVaultName')),0)]",
-        "name": "[variables('DeploymentNames').backup]",
-        "type": "Microsoft.Resources/deployments",
-        "apiVersion": "2017-05-10",
-        "dependsOn": [
-          "[concat('Microsoft.Resources/deployments/',variables('DeploymentNames').encryption)]"
-        ],
-        "resourceGroup": "[parameters('vaultResourceGroup')]",
-        "properties":{
-          "mode":"Incremental",
-         "templateLink":{
-           "uri": "https://raw.githubusercontent.com/noendscripting/azuredeploy/master/backup-template.json"
-         },
-         "parameters":{
-            "vaultName" : {
-              "value":"[parameters('backupVaultName')]"
-            },
-            "vmResourceID": {
-              "value": "[variables('vmResourceId')]"
-            },
-            "backupPolicyName" : {
-              "value": "[parameters('backupPolicyDsiplayname')]"
-            },
-            "virtualMachineName" :{
-              "value":"[parameters('virtualMachineName')]"
-            }
-         }
+    {
+      "condition": "[greater(length(parameters('backupVaultName')),0)]",
+      "name": "[variables('DeploymentNames').backup]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2017-05-10",
+      "dependsOn": [
+        "[concat('Microsoft.Resources/deployments/',variables('DeploymentNames').encryption)]"
+      ],
+      "resourceGroup": "[parameters('vaultResourceGroup')]",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/noendscripting/azuredeploy/master/backup-template.json"
+        },
+        "parameters": {
+          "vaultName": {
+            "value": "[parameters('backupVaultName')]"
+          },
+          "vmResourceID": {
+            "value": "[variables('vmResourceId')]"
+          },
+          "backupPolicyName": {
+            "value": "[parameters('backupPolicyDsiplayname')]"
+          },
+          "virtualMachineName": {
+            "value": "[parameters('virtualMachineName')]"
+          }
         }
-        
       }
+
+    }
   ],
   "outputs": {
 

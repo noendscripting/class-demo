@@ -3,156 +3,82 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "hubVNETName": {
-            "value": "hub-vnet",
-            "metadata": {
-                "description":"Name of the HUB VNNET"
-            }
+            "value": "hub-vnet"
         },
         "hubVNETIpPrefix": {
-            "value": "10.0.0.0/16",
-            "metadata": {
-                "descriotion":"CIDR for Ip Range for the Hub VNET must not overlap with any other VNET e.g. 10.0.0.0/16"
-            }
+            "value": "10.0.0.0/16"
+            
         },
         "hubVNETSubnet1Name": {
-            "value": "SharedSubnet",
-            "metadata": {
-                "description":"Name of the first subnet in the VNET "
-            }
+            "value": "SharedSubnet"
         },
         "hubVNETSubnet1IpPrefix": {
-            "value": "10.0.2.0/24",
-            "metadata": {
-                "description":"CIDR for the first subnet in the HUB vnet, must be inside the IP range of the Hub VNET"
-            }
+            "value": "10.0.2.0/24"
         },
         "spokeVNETName": {
-            "value": "production-vnet1",
-            "metadata":{
-                "description":"Name of the sppoke VNET"
-            }
+            "value": "production-vnet1"
         },
         "spokeVNETIpPrefix": {
-            "value":"10.1.0.0/16",
-            "metadata": {
-                "descrition":"CIDR IP range for the Spoke VNET must not overlapp with Ip range for Hub VNET "
-            }
+            "value":"10.1.0.0/16"
         },
         "spokeVNETSubnet1Name": {
-            "value": "default",
-            "metadata": {
-                "description":"Name of the SPOKE VNET subnet #1"
-            }
+            "value": "default"
         },
         "spokeVNETSubnet1IpPrefix": {
-            "value": "10.1.0.0/24",
-            "metadata": {
-                "description":"CIDR for the first subnet in the SPOKE VNET, must be inside the IP range of the Hub VNET"
-            }
+            "value": "10.1.0.0/24"
         },
-        "AzureFirewallName": {
-            "value": "MainFirewall",
-            "metadata": {
-                "description":"Name of the Azure Firewall deployed to HUB VNET"
-            }
+        "AzureFirewallname": {
+            "value": "MainFirewall"
         },
         "AzureFirewallPIPname": {
-            "value": "MainFirewallPIP",
-            "metadata": {
-                "description":"Name of the public IP Address for Main Firewall"
-            }
+            "value": "MainFirewallPIP"
         },
         "AzureFirewallSubnetIpPrefix": {
-            "value": "10.0.0.0/24",
-            "metadata": {
-                "description":"CIDR for the Main Firewall subnet must be at least /24"
-            }
+            "value": "10.0.0.0/24"
         },
         "vmssName": {
-            "value": "baseVM",
-            "metadata": {
-                "description":"Base Name for the scale set VM instance will be randomized later in template "
-            }
+            "value": "baseVM"
         },
         "adminUsername": {
-            "value":"vadmin",
-            "metadata": {
-                "description":"Name of the admin account for scale set VM instances"
-            }
+            "value":"vadmin"
         },
         "adminPassword": {
-            "value": "Test@2016",
-            "metadata": {
-                "description":"Password for the admin account for scaleset VM instances"
-            }
+            "value": "Test@2016"
         },
         "vmssVirtualmachineSize": {
-            "value": "Standard_B2s",
-            "metadata": {
-                "description":"Size of the VM instance in scale set"
-            }
+            "value": "Standard_B2s"
         },
         "vmssvrtutalMachineSKU": {
-            "value": "2019-Datacenter",
-            "metadata": {
-                "description":"OS type and version of the scale set VM instance"
-            }
+            "value": "2019-Datacenter"
         },
         "vmssvirtualMachineImagePublisher": {
-            "value": "MicrosoftWindowsServer",
-            "metadata": {
-                "description":"Name of the image publsihes of the VM scale set instance"
-            }
+            "value": "MicrosoftWindowsServer"
         },
         "vmssvirtualMachineImageOffer": {
-            "value": "WindowsServer",
-            "metadata": {
-                "description":"Name of the inage offer for the VM scale set instance"
-            }
+            "value": "WindowsServer"
 
         },
         "vmssInstanceCount": {
-            "value": 5,
-            "metadata": {
-                "description": "Number of VM instances (100 or less)."
-            }
+            "value": 5
         },       
         "hubVnetBastionName": {
-            "value": "bastion-hub-vnet",
-            "metadata": {
-                "description":"Name of the Azure Bastion deployed into HUB VNET"
-            }
+            "value": "bastion-hub-vnet"
         },
         "hubBastionPublicIPName": {
-            "value": "bastion-pip",
-            "metadata": {
-                "description":"Name of the public IP for the Azure Bastion in HUB VNET subnet #1"
-            }
+            "value": "bastion-pip"
         },
         "hubBastionIpPrefix": {
-            "value": "10.0.1.0/24",
-            "metadata": {
-                "description":"CIDR for the Azure Bastion subnet in the HUB VNET"
-            }
+            "value": "10.0.1.0/24"
         },
         "keyVaultName": {
-            "value": "demo-sc-vault",
-            "metadata": {
-                "description":"Name of the KeyVault for encryotion and admin VM password secret. Must be globally unique"
-            }
+            "value": "demo-sc-vault"
             
         },
         "keyVaultSecretName": {
-            "value": "VMPassword",
-            "metadata": {
-                "description":"Name of the Key Vault secret where server password is stored"
-            }
+            "value": "VMPassword"
         },
         "keyVaultSecretValue": {
-            "value": "Test@2016",
-            "metadata": {
-                "description":"Name of the Key Vault secret where server password is stored"
-            }
+            "value": "Test@2016"
         }
     }
 }

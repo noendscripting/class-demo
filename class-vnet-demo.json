@@ -3,55 +3,73 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "hubVNETName": {
+            
             "type": "String",
+            "defaultValue": "hub-vnet",
             "metadata": {
                 "description": "Name of the HUB VNNET"
             }
         },
         "hubVNETIpPrefix": {
+            
             "type": "string",
+            "defaultValue": "10.0.0.0/16",
             "metadata": {
                 "descriotion": "CIDR for Ip Range for the Hub VNET must not overlap with any other VNET e.g. 10.0.0.0/16"
             }
         },
         "hubVNETSubnet1Name": {
+            
             "type": "string",
+            "defaultValue": "SharedSubnet",
             "metadata": {
                 "description": "Name of the first subnet in the VNET "
             }
         },
         "hubVNETSubnet1IpPrefix": {
+            
             "type": "string",
+            "defaultValue": "10.0.2.0/24",
             "metadata": {
                 "description": "CIDR for the first subnet in the HUB vnet, must be inside the IP range of the Hub VNET"
             }
         },
         "spokeVNETName": {
+            
             "type": "String",
+            "defaultValue":"production-vnet1",
             "metadata": {
                 "description": "Name of the sppoke VNET"
             }
         },
         "spokeVNETIpPrefix": {
+            
             "type": "string",
+            "defaultValue":"10.1.0.0/16",
             "metadata": {
                 "descrition": "CIDR IP range for the Spoke VNET must not overlapp with Ip range for Hub VNET "
             }
         },
         "spokeVNETSubnet1Name": {
+            
             "type": "string",
+            "defaultValue":"default",
             "metadata": {
                 "description": "Name of the SPOKE VNET subnet #1"
             }
         },
         "spokeVNETSubnet1IpPrefix": {
+            
             "type": "string",
+            "defaultValue":"10.1.0.0/24",
             "metadata": {
                 "description": "CIDR for the first subnet in the SPOKE VNET, must be inside the IP range of the Hub VNET"
             }
         },
         "AzureFirewallname": {
+            
             "type": "string",
+            "defaultValue":"MainFirewall",
             "metadata": {
                 "description": "Name of the Azure Firewall deployed to HUB VNET"
             }
@@ -64,13 +82,17 @@
             }
         },
         "AzureFirewallSubnetIpPrefix": {
+            
             "type": "string",
+            "defaultValue":"10.0.0.0/24",
             "metadata": {
                 "description": "CIDR for the Main Firewall subnet must be at least /24"
             }
         },
         "vmssName": {
+           
             "type": "string",
+             "defaultValue":"baseVM",
             "metadata": {
                 "description": "Base Name for the scale set VM instance will be randomized later in template "
             }
@@ -88,51 +110,67 @@
             }
         },
         "vmssVirtualmachineSize": {
+            
             "type": "string",
+            "defaultValue":"Standard_B2s",
             "metadata": {
                 "description": "Size of the VM instance in scale set"
             }
         },
         "vmssvrtutalMachineSKU": {
+            
             "type": "string",
+            "defaultValue":"2019-Datacenter",
             "metadata": {
                 "description": "OS type and version of the scale set VM instance"
             }
         },
         "vmssvirtualMachineImagePublisher": {
+           
             "type": "string",
+             "defaultValue":"MicrosoftWindowsServer",
             "metadata": {
                 "description": "Name of the image publsihes of the VM scale set instance"
             }
         },
         "vmssvirtualMachineImageOffer": {
+           
             "type": "string",
+             "defaultValue":"WindowsServer",
             "metadata": {
                 "description": "Name of the inage offer for the VM scale set instance"
             }
 
         },
         "vmssInstanceCount": {
+            
             "type": "int",
+            "defaultValue":1,
             "metadata": {
                 "description": "Number of VM instances (100 or less)."
             },
             "maxValue": 100
         },
         "hubVnetBastionName": {
+            
             "type": "string",
+            "defaultValue":"bastion-hub-vnet",
             "metadata": {
                 "description": "Name of the Azure Bastion deployed into HUB VNET"
             }
         },
         "hubBastionPublicIPName": {
+            
             "type": "string",
+            "defaultValue":"bastion-pip",
             "metadata": {
                 "description": "Name of the public IP for the Azure Bastion in HUB VNET subnet #1"
             }
         },
         "hubBastionIpPrefix": {
+            
             "type": "string",
+            "defaultValue":"10.0.1.0/24",
             "metadata": {
                 "description": "CIDR for the Azure Bastion subnet in the HUB VNET"
             }
@@ -145,15 +183,27 @@
 
         },
         "keyVaultSecretName": {
+            
             "type": "string",
+            "defaultValue":"VMPassword",
             "metadata": {
                 "description": "Name of the Key Vault secret where server password is stored"
             }
         },
         "keyVaultSecretValue": {
+            
             "type": "string",
+            "defaultValue":"Test@2016",
             "metadata": {
                 "description": "Name of the KeyVault for encryotion and admin VM password secret. Must be globally unique"
+            }
+        },
+        "recoveryServiceVaultName": {
+            
+            "type": "string",
+            "defaultValue": "demo-bkup-vault",
+            "metadata": {
+                "description":"Name of the Azure Recovery Services Vault for VM backups"
             }
         }
     },
@@ -303,6 +353,20 @@
                 "value": "[parameters('keyVaultSecretValue')]",
                 "contentType": "string"
             }
+        },
+        //Azure Backup Vault
+        {
+            "type": "Microsoft.RecoveryServices/vaults",
+            "apiVersion": "2018-01-10",
+            "name": "[parameters('recoveryServiceVaultName')]",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "DisplayName":"AzureRSVault"
+            },
+            "sku": {
+                "name": "Standard"
+            },
+            "properties": {}
         },
         //Hub VNET
         {
@@ -723,9 +787,9 @@
                     {
                         "name": "Profile1",
                         "capacity": {
-                            "minimum": "2",
+                            "minimum": "1",
                             "maximum": "10",
-                            "default": "2"
+                            "default": "1"
                         },
                         "rules": [
                             {

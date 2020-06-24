@@ -2,83 +2,18 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "hubVNETName": {
-            "value": "hub-vnet"
-        },
-        "hubVNETIpPrefix": {
-            "value": "10.0.0.0/16"
-            
-        },
-        "hubVNETSubnet1Name": {
-            "value": "SharedSubnet"
-        },
-        "hubVNETSubnet1IpPrefix": {
-            "value": "10.0.2.0/24"
-        },
-        "spokeVNETName": {
-            "value": "production-vnet1"
-        },
-        "spokeVNETIpPrefix": {
-            "value":"10.1.0.0/16"
-        },
-        "spokeVNETSubnet1Name": {
-            "value": "default"
-        },
-        "spokeVNETSubnet1IpPrefix": {
-            "value": "10.1.0.0/24"
-        },
-        "AzureFirewallname": {
-            "value": "MainFirewall"
-        },
-        "AzureFirewallPIPname": {
-            "value": "MainFirewallPIP"
-        },
-        "AzureFirewallSubnetIpPrefix": {
-            "value": "10.0.0.0/24"
-        },
-        "vmssName": {
-            "value": "baseVM"
-        },
+     
         "adminUsername": {
             "value":"vadmin"
         },
         "adminPassword": {
             "value": "Test@2016"
         },
-        "vmssVirtualmachineSize": {
-            "value": "Standard_B2s"
-        },
-        "vmssvrtutalMachineSKU": {
-            "value": "2019-Datacenter"
-        },
-        "vmssvirtualMachineImagePublisher": {
-            "value": "MicrosoftWindowsServer"
-        },
-        "vmssvirtualMachineImageOffer": {
-            "value": "WindowsServer"
-
-        },
-        "vmssInstanceCount": {
-            "value": 5
-        },       
-        "hubVnetBastionName": {
-            "value": "bastion-hub-vnet"
-        },
-        "hubBastionPublicIPName": {
-            "value": "bastion-pip"
-        },
-        "hubBastionIpPrefix": {
-            "value": "10.0.1.0/24"
-        },
+        
         "keyVaultName": {
             "value": "demo-sc-vault"
             
-        },
-        "keyVaultSecretName": {
-            "value": "VMPassword"
-        },
-        "keyVaultSecretValue": {
-            "value": "Test@2016"
         }
+       
     }
 }

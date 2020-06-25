@@ -6,7 +6,7 @@
 
 - Clone github repository Class Demo</li> 
 - Create a resource group in your azure subscription and note the name and location settings
-- Deploy template 'class-vnet-demo.json' , edit 'class-vnetdemo.paraemeters.json'  to with your personalized parameters.
+- Deploy template 'class-vnet-demo.json' using [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/deployment/group?view=azure-cli-latest#az-deployment-group-create) or [Powershell](https://docs.microsoft.com/en-us/powershell/module/az.resources/new-azresourcegroupdeployment?view=azps-4.3.0).[^1]
 
 > KeyVault and Backup vault must have unique name DO NOT reuse ones from template
 
@@ -102,7 +102,7 @@ Set NSG diagnostics to send logs to Log Analytics Workspace
 
 ### Encryption AND Backup
 
-- Deploy VM with backup and encryotion via class-vm-demo.json template 
+- Deploy VM with backup and encryotion via class-vm-demo.json template. 
 
 >This will create VM in SharedSubnet of the Hub Vnet and VM will be subject to NSG and Route Tables
 
@@ -211,10 +211,7 @@ Remove resource group and all resources
 
 >       az group delete -g $rgName -y
 
-
-
-
-Create keyvault
+## [Optional] Create keyvault and configure it for use with Azure Backup to back up encrypted VMs
 
 >       az keyvault create --name $keyvaultName --resource-group $rgName --location $location --enabled-for-disk-encryption --enabled-for-template-deployment
 Create secret to use to provision VMs
@@ -228,4 +225,4 @@ Get the app id for backup
 Set key vault policy to allow read secrets 
 >       az keyvault set-policy --name  $keyvaultName  --spn $backupAppId --secret-permissions get,list,backup
 
-
+[^1] Use [reference documentation](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/overview) to understand Azuer Templates better

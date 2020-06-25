@@ -7,19 +7,17 @@
     },
     "virtualMachineSize": {
       "type": "string",
-      "defaultValue": ""
+      "defaultValue": "Standard_B2s"
     },
     "adminUsername": {
-      "type": "string",
-      "defaultValue": "VADMIN"
+      "type": "string"
     },
     "virtualNetworkName": {
       "type": "string",
       "defaultValue": "hub-vnet"
     },
     "adminPassword": {
-      "type": "securestring",
-      "defaultValue": "Test@2016"
+      "type": "securestring"
     },
     "subnetName": {
       "type": "string",
@@ -234,7 +232,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "https://raw.githubusercontent.com/noendscripting/azuredeploy/master/encrypt-extension.json"
+          "uri": "https://github.com/noendscripting/class-demo/blob/master/encrypt-extension.json"
         },
         "parameters": {
           "vmName": {
@@ -270,7 +268,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "https://raw.githubusercontent.com/noendscripting/azuredeploy/master/backup-template.json"
+          "uri": "https://raw.githubusercontent.com/noendscripting/class-demo/master/backup-template.json"
         },
         "parameters": {
           "vaultName": {

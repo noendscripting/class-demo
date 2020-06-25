@@ -859,7 +859,7 @@
             "location": "[resourceGroup().location]",
             "dependsON":[
                 "[variables('hubVnetid')]",
-                "[resourceId('Microsoft.Network/publicIPAddresses',parameters('HubBastionPublicIPName'))]"
+                "[resourceId('Microsoft.Network/publicIPAddresses',parameters('hubBastionPublicIPName'))]"
                 ],
             "tags": {
                 "DisplayName": "HubBastion"

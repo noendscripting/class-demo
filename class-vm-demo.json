@@ -82,7 +82,6 @@
     },
     "backupVaultName": {
       "type": "string",
-      "defaultValue": "demo-bkup-vault",
       "minLength": 0
     },
     "backupPolicyDsiplayname": {
@@ -90,8 +89,7 @@
       "defaultValue": "DefaultPolicy"
     },
     "vaultResourceGroup": {
-      "type": "string",
-      "defaultValue": "Demo-RG"
+      "type": "string"
     }
 
   },
@@ -232,7 +230,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "https://github.com/noendscripting/class-demo/blob/master/encrypt-extension.json"
+          "uri": "https://github.com/noendscripting/class-demo/blob/master/encrypt-extension.jsonnsp"
         },
         "parameters": {
           "vmName": {
